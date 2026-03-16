@@ -1,0 +1,33 @@
+{
+  "name": "ai_testers",
+  "version": "1.0.0",
+  "description": "This repository is being turned into a Node.js project built with [Remotion](https://www.remotion.dev/docs/) for code-driven educational video generation.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "sync:data": "node scripts/generate-lesson-data.mjs",
+    "studio": "npm run sync:data && remotion studio src/index.ts",
+    "render:l1": "npm run sync:data && remotion render src/index.ts L1Intro out/L1Intro.mp4",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests configured\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@remotion/cli": "^4.0.436",
+    "@remotion/media": "^4.0.436",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "remotion": "^4.0.436"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

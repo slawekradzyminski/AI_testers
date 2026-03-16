@@ -1,0 +1,17 @@
+node_modules/
+out/
+.DS_Store
+
+# Remotion / build caches
+node_modules/.cache/
+
+# Video and binary media sources
+*.mp4
+*.mov
+*.m4v
+*.webm
+*.avi
+
+# Optional local artifacts
+dist/
+coverage/
