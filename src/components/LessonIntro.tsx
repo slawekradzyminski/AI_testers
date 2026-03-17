@@ -1,6 +1,7 @@
 import React from 'react';
 import {AbsoluteFill} from 'remotion';
-import {Background} from './Background';
+import {SlideFrame} from './SlideFrame';
+import {accentTitleStyle, glassPanelStyle} from './slideTheme';
 
 export type LessonIntroProps = {
 	/** Series/brand name, e.g. "AI Testers" */
@@ -15,15 +16,6 @@ export type LessonIntroProps = {
 	presenterName?: string;
 };
 
-const glassPanel: React.CSSProperties = {
-	background: 'linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04))',
-	border: '1px solid rgba(255,255,255,0.15)',
-	boxShadow: '0 18px 38px rgba(0,0,0,0.18)',
-	backdropFilter: 'blur(14px)',
-	borderRadius: 28,
-	color: '#f4f7fb',
-};
-
 /** Reusable full-screen lesson intro. Same style for L1, L2, L3, etc. */
 export const LessonIntro: React.FC<LessonIntroProps> = ({
 	seriesName,
@@ -33,13 +25,7 @@ export const LessonIntro: React.FC<LessonIntroProps> = ({
 	presenterName = 'Sławek',
 }) => {
 	return (
-		<AbsoluteFill
-			style={{
-				fontFamily: '"Avenir Next", "SF Pro Display", "Helvetica Neue", sans-serif',
-				color: '#f4f7fb',
-			}}
-		>
-			<Background />
+		<SlideFrame>
 			<AbsoluteFill
 				style={{
 					display: 'flex',
@@ -68,10 +54,7 @@ export const LessonIntro: React.FC<LessonIntroProps> = ({
 						lineHeight: 1,
 						textAlign: 'center',
 						margin: 0,
-						background: 'linear-gradient(135deg, #f8fbff 0%, #b8d4e8 50%, #8ad8ff 100%)',
-						WebkitBackgroundClip: 'text',
-						WebkitTextFillColor: 'transparent',
-						backgroundClip: 'text',
+						...accentTitleStyle,
 					}}
 				>
 					{title.split('\n').map((line, i) => (
@@ -111,8 +94,7 @@ export const LessonIntro: React.FC<LessonIntroProps> = ({
 							alignItems: 'center',
 							gap: 16,
 							padding: '18px 22px',
-							borderRadius: 28,
-							...glassPanel,
+							...glassPanelStyle,
 						}}
 					>
 						<div
@@ -139,6 +121,6 @@ export const LessonIntro: React.FC<LessonIntroProps> = ({
 					</div>
 				</div>
 			</AbsoluteFill>
-		</AbsoluteFill>
+		</SlideFrame>
 	);
 };

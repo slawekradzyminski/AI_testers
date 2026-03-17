@@ -1,0 +1,57 @@
+vars: {
+  d2-config: {
+    theme-id: 200
+    dark-theme-id: 200
+    layout-engine: elk
+  }
+}
+
+direction: down
+
+input: "What's the capital of France?" {
+  shape: rectangle
+  style: {
+    fill: "#182339"
+    stroke: "#3daeff"
+    stroke-width: 3
+    font-size: 30
+    font-color: "#f4f7fb"
+    border-radius: 22
+    shadow: true
+  }
+}
+
+transformer: TRANSFORMER {
+  shape: rectangle
+  style: {
+    fill: "#182339"
+    stroke: "#ffd166"
+    stroke-width: 3
+    font-size: 34
+    font-color: "#f4f7fb"
+    bold: true
+    border-radius: 22
+    shadow: true
+  }
+}
+
+output: "The capital of France is Paris." {
+  shape: rectangle
+  style: {
+    fill: "#182339"
+    stroke: "#ffb84a"
+    stroke-width: 3
+    font-size: 28
+    font-color: "#f4f7fb"
+    border-radius: 22
+    shadow: true
+  }
+}
+
+input -> transformer: {
+  style.stroke: "#5ec8ff"
+}
+
+transformer -> output: {
+  style.stroke: "#ffd166"
+}

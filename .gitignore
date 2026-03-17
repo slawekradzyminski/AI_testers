@@ -2,8 +2,12 @@ node_modules/
 out/
 .DS_Store
 
+# env
+.env
+
 # Remotion / build caches
 node_modules/.cache/
+public/generated/
 
 # Video and binary media sources
 *.mp4

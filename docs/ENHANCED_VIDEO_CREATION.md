@@ -1,16 +1,18 @@
-# Enhanced Video Creation: Intro + Presenter Video
+# Enhanced Video Creation: L1Full
 
-This document describes how to create the **L1 Enhanced** video: an 11-second full-screen intro ("Jak działa LLM?") followed by the presenter video (`L1_intro.mp4`).
+This document describes how to create the **L1Full** video: the presenter video with timed overlay animations layered on top.
 
 ## Overview
 
 | Component | Description |
 |-----------|-------------|
-| **Intro** | 11-second full-screen graphic overlay: "Jak działa LLM?", subtitle, lower third (Sławek) |
+| **Intro clip** | `L1Intro` composition for fast iteration on the opening slide |
+| **Diagram clip** | `L1Diagram` composition for the flow diagram |
+| **Logits clip** | `L1Logits` composition for the probability/logits visual |
 | **Presenter video** | `L1/L1_intro.mp4` — your recorded lesson/presentation |
-| **Output** | `out/L1Enhanced.mp4` — same duration as presenter video; only the **screen** is replaced for the first 11 seconds |
+| **Output** | `out/L1Full.mp4` — full lesson video with overlays baked in |
 
-**Audio:** The presenter's audio plays from the very beginning (over the intro). Only the visual is replaced for 11 seconds.
+**Audio:** The presenter's audio plays through the full lesson video.
 
 ## File Locations
 
@@ -18,8 +20,8 @@ This document describes how to create the **L1 Enhanced** video: an 11-second fu
 |------|---------|
 | `L1/L1_intro.mp4` | **Source** — your presenter video (never moved or deleted) |
 | `public/L1_intro.mp4` | **Copy** — used by Remotion during render |
-| `out/L1Intro.mp4` | Intro-only render (11s) |
-| `out/L1Enhanced.mp4` | Final output (intro + presenter video) |
+| `public/generated/l1-flow.svg` | Generated D2 diagram asset |
+| `out/L1Full.mp4` | Final output (full lesson with overlays) |
 
 **Backup policy:** The script only **copies** files. It never moves or deletes. `L1/L1_intro.mp4` remains the canonical source.
 
@@ -29,11 +31,9 @@ This document describes how to create the **L1 Enhanced** video: an 11-second fu
 # 1. Add your presenter video
 #    Place your recorded lesson at L1/L1_intro.mp4
 
-# 2. Run the enhanced render
+# 2. Render the full video
 npm run render:l1-enhanced
 ```
-
-If `L1/L1_intro.mp4` does not exist, the script creates it from `out/L1Intro.mp4` (the intro-only render) for testing. Run `npm run render:l1` first if needed.
 
 ## How It Works
 
@@ -54,12 +54,14 @@ If `L1/L1_intro.mp4` does not exist, the script creates it from `out/L1Intro.mp4
 5. **Render**  
    Runs `remotion render` with `--props` containing `videoDurationInSeconds`.
 
-### 2. Remotion composition (`L1EnhancedComposition`)
+### 2. Remotion compositions
 
-- **Video layer:** `<Html5Video>` plays `L1_intro.mp4` from frame 0 for the full duration. Audio starts immediately.
-- **Overlay layer (0–11s):** `L1IntroComposition` ("Jak działa LLM?") covers the screen. After 11 seconds it disappears and the presenter video is visible.
+- **`L1Intro`**: 10-second intro-only clip
+- **`L1Diagram`**: flow-diagram clip
+- **`L1Logits`**: probability/logits clip
+- **`L1Full`**: the full lesson composition
 
-Total duration = presenter video duration (unchanged). Only the first 11 seconds of the screen are replaced.
+`L1Full` plays the presenter video from frame 0 and overlays the configured lesson slides at their timestamp windows.
 
 ### 3. Reusable intro for L2, L3, etc.
 
@@ -92,40 +94,30 @@ Use it in `L2IntroComposition`, `L3IntroComposition`, etc. with lesson-specific 
 
 ## Manual Steps
 
-### Render intro only
+### Render full video
 
 ```bash
 npm run render:l1
-# Output: out/L1Intro.mp4 (11 seconds)
-```
-
-### Render enhanced (intro + video)
-
-```bash
-npm run render:l1-enhanced
-# Output: out/L1Enhanced.mp4
+# Output: out/L1Full.mp4
 ```
 
 ### Preview in Remotion Studio
 
 ```bash
 npm run studio
-# Select composition "L1Enhanced"
-# Override props: videoDurationInSeconds (must match your video)
+# Select composition "L1Intro", "L1Diagram", "L1Logits", or "L1Full"
 ```
 
 ## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
-| `L1_intro.mp4 not found` | Add your video to `L1/L1_intro.mp4` or run `npm run render:l1` first |
-| `ffprobe` not found | Install FFmpeg (`brew install ffmpeg` on macOS) |
-| Wrong duration | Ensure `L1_intro.mp4` is a valid MP4; re-encode with FFmpeg if needed |
+| `L1_intro.mp4 not found` | Add your video to `L1/L1_intro.mp4` |
 | Video not visible | Check `public/L1_intro.mp4` exists after the script runs |
 
 ## Animation overlays and timestamps
 
-**Timestamps file:** `L1/L1_timestamps.ts` — edit this file to change when overlays appear.
+**Lesson content file:** `src/content/l1.ts` — edit this file to change overlay timing and content.
 
 | Time | Overlay |
 |------|---------|
@@ -133,7 +125,7 @@ npm run studio
 | **30–60s** | Flow diagram — Input → Transformer → Output (screenshot style) |
 | **3:50–4:10** | Chaos — funny probabilistic/chaos visual |
 
-Components: `FlowDiagramImage`, `ChaosImage` (in `src/components/`).
+Components: `LessonIntro`, `FlowDiagramSlide`, `ProbabilityChartSlide` (in `src/components/`).
 
 ## References
 
