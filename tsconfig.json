@@ -14,5 +14,5 @@
     "jsx": "react-jsx",
     "types": ["node"]
   },
-  "include": ["src", "remotion.config.ts"]
+  "include": ["src", "L1", "remotion.config.ts"]
 }

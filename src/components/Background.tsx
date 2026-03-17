@@ -1,15 +1,7 @@
 import React from 'react';
-import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
+import {AbsoluteFill} from 'remotion';
 
 export const Background: React.FC = () => {
-	const frame = useCurrentFrame();
-	const drift = interpolate(frame, [0, 300], [0, -120], {
-		extrapolateRight: 'extend',
-	});
-	const orbit = interpolate(frame, [0, 240], [0, 1], {
-		extrapolateRight: 'extend',
-	});
-
 	return (
 		<AbsoluteFill
 			style={{
@@ -22,17 +14,6 @@ export const Background: React.FC = () => {
 			<div
 				style={{
 					position: 'absolute',
-					inset: -220,
-					backgroundImage:
-						'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
-					backgroundSize: '80px 80px',
-					transform: `translate3d(${drift}px, ${drift * 0.35}px, 0)`,
-					opacity: 0.18,
-				}}
-			/>
-			<div
-				style={{
-					position: 'absolute',
 					right: 120,
 					top: 90,
 					width: 440,
@@ -40,7 +21,6 @@ export const Background: React.FC = () => {
 					borderRadius: 999,
 					background: 'radial-gradient(circle, rgba(61,174,255,0.24), transparent 68%)',
 					filter: 'blur(36px)',
-					transform: `translate3d(${Math.sin(orbit) * 24}px, ${Math.cos(orbit) * 18}px, 0)`,
 				}}
 			/>
 			<div

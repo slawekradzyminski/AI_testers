@@ -10,6 +10,7 @@
     "sync:data": "node scripts/generate-lesson-data.mjs",
     "studio": "npm run sync:data && remotion studio src/index.ts",
     "render:l1": "npm run sync:data && remotion render src/index.ts L1Intro out/L1Intro.mp4",
+    "render:l1-enhanced": "node scripts/prepare-and-render-enhanced.mjs",
     "typecheck": "tsc --noEmit",
     "test": "echo \"No tests configured\""
   },
@@ -22,6 +23,7 @@
     "@remotion/media": "^4.0.436",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "recharts": "^3.8.0",
     "remotion": "^4.0.436"
   },
   "devDependencies": {
