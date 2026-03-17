@@ -1,0 +1,2 @@
+- make sure `npm run typecheck` and `npm run test` pass
+- aim to cover reusable components by tests

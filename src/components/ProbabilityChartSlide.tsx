@@ -23,7 +23,7 @@ export const ProbabilityChartSlide: React.FC<ProbabilityChartSlideProps> = ({
 }) => {
 	const frame = useCurrentFrame();
 	const wobble = Math.sin(frame * 0.15) * 3;
-	const maxLabelWidth = 92;
+	const maxLabelWidth = 116;
 
 	return (
 		<OverlayFrame durationInFrames={durationInFrames}>
@@ -50,8 +50,8 @@ export const ProbabilityChartSlide: React.FC<ProbabilityChartSlideProps> = ({
 				</div>
 				<div
 					style={{
-						marginTop: 16,
-						fontSize: 42,
+						marginTop: 10,
+						fontSize: 52,
 						fontWeight: 800,
 						color: 'rgba(244,247,251,0.95)',
 						textAlign: 'center',
@@ -61,50 +61,49 @@ export const ProbabilityChartSlide: React.FC<ProbabilityChartSlideProps> = ({
 				</div>
 				<div
 					style={{
-						marginTop: 12,
-						fontSize: 24,
+						marginTop: 10,
+						fontSize: 30,
 						color: 'rgba(244,247,251,0.85)',
 						textAlign: 'center',
-						maxWidth: 560,
+						maxWidth: 900,
 					}}
 				>
 					{subtitle}
 				</div>
 				<DiagramCard
 					style={{
-						marginTop: 32,
+						marginTop: 30,
 						width: '100%',
-						maxWidth: 640,
-						height: 280,
-						padding: 24,
+						maxWidth: 1180,
+						padding: 40,
 					}}
 				>
 					<div
 						style={{
-							fontSize: 14,
+							fontSize: 22,
 							letterSpacing: 3,
 							textTransform: 'uppercase',
 							color: '#8ad8ff',
-							marginBottom: 16,
+							marginBottom: 28,
 							fontWeight: 600,
 						}}
 					>
 						{chartTitle}
 					</div>
-					<div style={{display: 'grid', gap: 14}}>
+					<div style={{display: 'grid', gap: 22}}>
 						{data.map((entry) => (
 							<div
 								key={entry.token}
 								style={{
 									display: 'grid',
-									gridTemplateColumns: `${maxLabelWidth}px 1fr 56px`,
+									gridTemplateColumns: `${maxLabelWidth + 34}px 1fr 88px`,
 									alignItems: 'center',
-									gap: 14,
+									gap: 22,
 								}}
 							>
 								<div
 									style={{
-										fontSize: 16,
+										fontSize: 28,
 										fontWeight: 700,
 										color: 'rgba(244,247,251,0.92)',
 										textAlign: 'right',
@@ -114,7 +113,7 @@ export const ProbabilityChartSlide: React.FC<ProbabilityChartSlideProps> = ({
 								</div>
 								<div
 									style={{
-										height: 26,
+										height: 42,
 										borderRadius: 999,
 										background: 'rgba(255,255,255,0.08)',
 										overflow: 'hidden',
@@ -133,7 +132,7 @@ export const ProbabilityChartSlide: React.FC<ProbabilityChartSlideProps> = ({
 								</div>
 								<div
 									style={{
-										fontSize: 14,
+										fontSize: 26,
 										fontWeight: 700,
 										color: 'rgba(244,247,251,0.8)',
 									}}

@@ -1,6 +1,5 @@
 import React from 'react';
 import {AbsoluteFill, Img, staticFile} from 'remotion';
-import {DiagramCard} from './DiagramCard';
 import {OverlayFrame} from './OverlayFrame';
 
 type FlowDiagramSlideProps = {
@@ -13,31 +12,21 @@ export const FlowDiagramSlide: React.FC<FlowDiagramSlideProps> = ({durationInFra
 		<AbsoluteFill
 			style={{
 				display: 'flex',
-				flexDirection: 'column',
 				alignItems: 'center',
 				justifyContent: 'center',
-				gap: 0,
-				padding: 84,
+				padding: 36,
 			}}
 		>
-			<DiagramCard
+			<Img
+				src={staticFile(svgPath)}
 				style={{
 					width: '100%',
-					maxWidth: 1100,
-					padding: 32,
-					background: 'linear-gradient(180deg, rgba(16, 25, 43, 0.94), rgba(8, 14, 24, 0.9))',
-					boxShadow: '0 30px 80px rgba(0,0,0,0.3)',
+					maxWidth: 1480,
+					maxHeight: 900,
+					objectFit: 'contain',
+					filter: 'drop-shadow(0 32px 60px rgba(0,0,0,0.28))',
 				}}
-			>
-				<Img
-					src={staticFile(svgPath)}
-					style={{
-						width: '100%',
-						height: 560,
-						objectFit: 'contain',
-					}}
-				/>
-			</DiagramCard>
+			/>
 		</AbsoluteFill>
 	</OverlayFrame>
 );
