@@ -5,26 +5,18 @@ import {secondsToFrameIndex, secondsToFrames} from '../lib/constants';
 
 describe('LessonComposition', () => {
 	it('derives frame sequences from lesson slide content', () => {
-		expect(getLessonSequences(l1Definition)).toEqual([
-			{
-				id: 'L1-intro-0',
-				type: 'intro',
-				startInFrames: 0,
-				durationInFrames: secondsToFrames(11),
-			},
-			{
-				id: 'L1-flow-diagram-1',
-				type: 'flow-diagram',
-				startInFrames: secondsToFrameIndex(30),
-				durationInFrames: secondsToFrames(30),
-			},
-			{
-				id: 'L1-probability-chart-2',
-				type: 'probability-chart',
-				startInFrames: secondsToFrameIndex(230),
-				durationInFrames: secondsToFrames(20),
-			},
-		]);
+		const sequences = getLessonSequences(l1Definition);
+
+		expect(sequences).toHaveLength(l1Definition.slides.length);
+
+		for (const [index, slide] of l1Definition.slides.entries()) {
+			expect(sequences[index]).toEqual({
+				id: `${l1Definition.id}-${slide.type}-${index}`,
+				type: slide.type,
+				startInFrames: secondsToFrameIndex(slide.startInSeconds),
+				durationInFrames: secondsToFrames(slide.endInSeconds - slide.startInSeconds),
+			});
+		}
 	});
 
 	it('calculates composition metadata from the lesson definition', () => {

@@ -2,9 +2,9 @@ import type {LessonDefinition} from './types';
 import {l1Lesson} from '../data/generated/l1-subs';
 
 export const l1Timestamps = {
-	intro: {start: 0, end: 11},
-	flowDiagram: {start: 30, end: 60},
-	chaos: {start: 230, end: 250},
+	intro: {start: 0, end: 12},
+	flowDiagram: {start: 30, end: 77},
+	chaos: {start: 224, end: 308.672},
 } as const;
 
 export const l1Definition: LessonDefinition = {
