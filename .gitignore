@@ -19,3 +19,9 @@ public/generated/
 # Optional local artifacts
 dist/
 coverage/
+tmp/
+
+# Video analyzer intermediate artifacts
+L1/video-analysis/**
+!L1/video-analysis/
+!L1/video-analysis/scene-descriptions.json

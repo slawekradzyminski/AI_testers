@@ -85,3 +85,15 @@ npx remotion render src/index.ts L1Full out/L1Full.mp4
 - Flow diagrams are defined as D2 files such as `L1/flow.d2`.
 - `npm run sync:data` also renders those diagrams into SVG assets under `public/generated/`.
 - Compositions use the generated SVGs directly, so Studio does not pause to compile D2 at runtime.
+
+## Video Analyzer
+
+There is also a separate TypeScript tool for video analysis under `tools/video-analyzer/`.
+
+Dry-run example:
+
+```bash
+npm run analyze:video -- --lesson L1 --input L1/L1_intro.mp4 --dry-run
+```
+
+See [docs/VIDEO_ANALYZER.md](/Users/admin/IdeaProjects/AI_testers/docs/VIDEO_ANALYZER.md) for details.
