@@ -82,11 +82,17 @@ export const LessonComposition: React.FC<LessonCompositionProps> = ({lesson}) =>
 			style={{
 				fontFamily: slideFontFamily,
 				color: '#f4f7fb',
+				backgroundColor: '#000',
 			}}
 		>
 			<Html5Video
 				src={staticFile(lesson.videoSrc)}
-				style={{width: '100%', height: '100%', objectFit: 'contain'}}
+				style={{
+					width: '100%',
+					height: '100%',
+					objectFit: 'contain',
+					objectPosition: 'center',
+				}}
 			/>
 			{lesson.slides.map((slide, index) => {
 				const sequence = sequences[index];

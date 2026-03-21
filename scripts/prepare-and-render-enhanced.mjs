@@ -31,7 +31,7 @@ function copyFile(src, dest) {
 	console.log(`Copied ${path.relative(repoRoot, src)} → ${path.relative(repoRoot, dest)}`);
 }
 
-function main() {
+async function main() {
 	console.log('=== L1 Video: Prepare & Render ===\n');
 
 	// 1. Ensure source video exists

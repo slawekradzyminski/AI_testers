@@ -37,7 +37,7 @@ export const LessonIntro: React.FC<LessonIntroProps> = ({
 			>
 				<div
 					style={{
-						fontSize: 14,
+						fontSize: 18,
 						letterSpacing: 6,
 						textTransform: 'uppercase',
 						color: 'rgba(138, 216, 255, 0.9)',
@@ -49,7 +49,7 @@ export const LessonIntro: React.FC<LessonIntroProps> = ({
 				</div>
 				<h1
 					style={{
-						fontSize: 140,
+						fontSize: 168,
 						fontWeight: 900,
 						lineHeight: 1,
 						textAlign: 'center',
@@ -76,12 +76,12 @@ export const LessonIntro: React.FC<LessonIntroProps> = ({
 				/>
 				<p
 					style={{
-						fontSize: 32,
+						fontSize: 38,
 						fontWeight: 500,
 						color: 'rgba(244, 247, 251, 0.85)',
 						marginTop: 32,
 						textAlign: 'center',
-						maxWidth: 720,
+						maxWidth: 820,
 						lineHeight: 1.4,
 					}}
 				>
@@ -108,7 +108,7 @@ export const LessonIntro: React.FC<LessonIntroProps> = ({
 						<div>
 							<div
 								style={{
-									fontSize: 14,
+									fontSize: 16,
 									letterSpacing: 3,
 									textTransform: 'uppercase',
 									color: '#8ad8ff',
@@ -116,7 +116,7 @@ export const LessonIntro: React.FC<LessonIntroProps> = ({
 							>
 								Prowadzący
 							</div>
-							<div style={{fontSize: 28, fontWeight: 700}}>{presenterName}</div>
+							<div style={{fontSize: 32, fontWeight: 700}}>{presenterName}</div>
 						</div>
 					</div>
 				</div>

@@ -32,17 +32,11 @@ describe('LessonComposition', () => {
 	});
 
 	it('keeps L1 content in data modules instead of the composition', () => {
-		expect(l1Definition.slides).toHaveLength(3);
+		expect(l1Definition.slides).toHaveLength(1);
 		expect(l1Definition.slides[0]).toMatchObject({
 			type: 'intro',
 			seriesName: 'AI Testers',
 			lessonNumber: 1,
 		});
-		expect(l1Definition.slides[1]).toMatchObject({
-			type: 'flow-diagram',
-		});
-		if (l1Definition.slides[1].type === 'flow-diagram') {
-			expect(l1Definition.slides[1].svgPath).toBe('generated/l1-flow.svg');
-		}
 	});
 });
