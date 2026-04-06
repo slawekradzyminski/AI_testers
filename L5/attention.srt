@@ -1,0 +1,324 @@
+1
+00:00:00,001 --> 00:00:07,000
+Cześć wszystkim, zapraszam Was na kolejną lekcję, tym razem o mechanizmie atencji.
+
+2
+00:00:07,000 --> 00:00:15,000
+Pamiętacie już zapewne, że nasz prompt jest bardzo mocno opakowywany przez narzędzie, którego używamy.
+
+3
+00:00:15,000 --> 00:00:19,000
+Później jest tokenizowany, a później zamieniony na wektory.
+
+4
+00:00:19,000 --> 00:00:25,000
+I wchodzimy do głównej części, czyli do magicznego LLM-a.
+
+5
+00:00:25,000 --> 00:00:32,000
+Swoją drogą, odnośnie LLM-a warto na początku nadmienić, że coraz mniej wiemy o tym, jak działa LLM.
+
+6
+00:00:32,000 --> 00:00:44,000
+Coraz rzadziej firmy decydują się na publikacje techniczne, także można powiedzieć, że coraz mniej znamy szczegółów.
+
+7
+00:00:44,000 --> 00:00:54,000
+I moim zdaniem najlepiej LLM-a zrozumieć za pomocą takiego prostego podziału na dwa mechanizmy.
+
+8
+00:00:54,000 --> 00:01:00,000
+Jednym z tych mechanizmów jest właśnie mechanizm atencji, który sobie dzisiaj omówimy.
+
+9
+00:01:00,000 --> 00:01:08,000
+A drugim jest sieć neuronowa, która przewiduje kolejny token i o tym będzie w kolejnej lekcji.
+
+10
+00:01:08,000 --> 00:01:11,000
+Także dzisiaj skupimy się na mechanizmie atencji.
+
+11
+00:01:11,000 --> 00:01:15,000
+Wyobraźcie sobie lekcję języka polskiego w przeszłości.
+
+12
+00:01:15,000 --> 00:01:23,000
+Pamiętacie, być może mieliście taką stereotypową polonistkę, która pytała nas, co autor miał na myśli.
+
+13
+00:01:23,000 --> 00:01:33,000
+No i mając takie pytanie, dostając takie pytanie, musieliśmy się zastanowić, jaki jest tak naprawdę kontekst tego wiersza.
+
+14
+00:01:33,000 --> 00:01:38,000
+Context engineering by the way, czyli można to zmapować na pojęcie EA-owe.
+
+15
+00:01:38,000 --> 00:01:48,000
+Czyli robiliśmy taki context engineering do tego pytania i zastanawialiśmy się, jaka to była epoka, kim był autor,
+
+16
+00:01:48,000 --> 00:02:00,000
+w jakim akurat stanie psychofizycznym był autor, pisząc ten wiersz, co było w poprzednich i kolejnych zwrotkach tego wiersza itd.
+
+17
+00:02:00,000 --> 00:02:10,000
+Czyli można powiedzieć, że robiliśmy pewnego rodzaju przewidywanie, co autor miał na myśli.
+
+18
+00:02:10,000 --> 00:02:16,000
+I można powiedzieć, że odpowiadając, generowaliśmy kolejne tokeny, dokładnie tak jak to robi LLM.
+
+19
+00:02:16,000 --> 00:02:24,000
+Być może ta analogia poszła za daleko, ale można sobie to tak ustawić.
+
+20
+00:02:24,000 --> 00:02:32,000
+Czyli podsumowując, mechanizm atencji ukontekstawia naszego prompta.
+
+21
+00:02:32,000 --> 00:02:42,000
+Czyli mechanizm atencji powoduje, że LLM rozumie, co my chcieliśmy tak naprawdę uzyskać.
+
+22
+00:02:42,000 --> 00:02:46,000
+To jest bardzo istotne. To jest to ukontekstawianie.
+
+23
+00:02:46,000 --> 00:02:52,000
+Pamiętacie być może translator Google'a? Kolejna świetna analogia moim zdaniem.
+
+24
+00:02:52,000 --> 00:03:00,000
+Translator Google'a kilka lat temu tłumaczył słowo po słowie w sposób bardzo, bardzo naiwny.
+
+25
+00:03:00,000 --> 00:03:05,000
+Czyli np. mieliśmy zdanie "ja jechać rower".
+
+26
+00:03:05,000 --> 00:03:16,000
+To było fatalne tłumaczenie i ono było fatalne dlatego, że translator nie rozumiał właśnie kontekstu.
+
+27
+00:03:16,000 --> 00:03:23,000
+Można powiedzieć, że to było fatalne dlatego, że ten translator nie miał właśnie mechanizmu atencji,
+
+28
+00:03:23,000 --> 00:03:29,000
+który powoduje, że AI wie, co my chcieliśmy uzyskać.
+
+29
+00:03:29,000 --> 00:03:39,000
+I teraz tak, jak działa ten mechanizm atencji? Właściwie jak działają liczne tak zwane głowy, czyli attention heads?
+
+30
+00:03:39,000 --> 00:03:43,000
+Ogólnie warto wrócić do początków.
+
+31
+00:03:43,000 --> 00:03:52,000
+Mechanizm atencji został opisany, nie wiem kiedy został wykryty, ale został opisany w roku 2017.
+
+32
+00:03:52,000 --> 00:04:02,000
+To była bardzo głośna publikacja i minęło kilka lat zanim tak naprawdę to zostało zaimplementowane,
+
+33
+00:04:02,000 --> 00:04:06,000
+zanim to zostało użyte. Początkowo były obawy, że to będzie zbyt drogie.
+
+34
+00:04:06,000 --> 00:04:14,000
+Później, jak pewnie pamiętacie, sam Altman wraz z ekipą z OpenAI udowodnił, że nie jest tak do końca.
+
+35
+00:04:14,000 --> 00:04:26,000
+Ta praca opisywała korelowanie poszczególnych tokenów ze sobą, korelowanie poszczególnych wektorów ze sobą.
+
+36
+00:04:26,000 --> 00:04:32,000
+Wróćmy na chwilę do lekcji o wektorach, o embeddingsach.
+
+37
+00:04:32,000 --> 00:04:39,000
+Pamiętacie, wiadomo, tych przestrzeni tam było dużo, tam jest ich ponad 1000 czy ponad 2000 już teraz.
+
+38
+00:04:39,000 --> 00:04:47,000
+Natomiast ja użyłem takiego prostego triku, że poprosiłem Was o wyobrażenie sobie przestrzeni 3D
+
+39
+00:04:47,000 --> 00:04:52,000
+i każdy token w tej przestrzeni miał swoje miejsce.
+
+40
+00:04:52,000 --> 00:05:01,000
+I właśnie wyobraźcie sobie, że mechanizm atencji powoduje, że te poszczególne punkty w tej przestrzeni,
+
+41
+00:05:01,000 --> 00:05:09,000
+czyli to co my promptujemy i to co jest dodawane też w prompcie za pomocą narzędzia, którego używamy,
+
+42
+00:05:09,000 --> 00:05:12,000
+że to wszystko ze sobą koreluje.
+
+43
+00:05:12,000 --> 00:05:20,000
+Czyli można to tak sobie ułożyć, że te wszystkie punkciki wzajemnie na siebie oddziałują.
+
+44
+00:05:20,000 --> 00:05:30,000
+Czyli wartości tych poszczególnych cyferek od -1 do 1, które są statyczne w embeddingsach, one się zmieniają.
+
+45
+00:05:30,000 --> 00:05:37,000
+Następuje takie jakby mikrowanie tych wszystkich punktów w tej przestrzeni.
+
+46
+00:05:37,000 --> 00:05:46,000
+Te wszystkie punkty na siebie oddziałują i AI wykminia, jaki jest kontekst naszej wypowiedzi.
+
+47
+00:05:46,000 --> 00:05:54,000
+Można to sobie tak też ułożyć w głowie, często o tym mówię, że wyobraźcie sobie słówko "zamek".
+
+48
+00:05:54,000 --> 00:06:01,000
+Zamek może być od spodni, zamek może być też budowlą, może być zamek w hokeju na lodzie nawet.
+
+49
+00:06:01,000 --> 00:06:12,000
+Jeżeli mówimy o zamku w spodniach, to ten punkt z tokenu zamek jest przesuwany w stronę spodni.
+
+50
+00:06:12,000 --> 00:06:20,000
+Jeżeli mówimy o zamku w malborku, to ten punkt słowa zamek jest przesuwany w stronę architektury, w stronę malborka.
+
+51
+00:06:20,000 --> 00:06:33,000
+Czyli w ten sposób w jakimś tam kontekście geograficznym, czy odzieżowym, czy formalnym te wszystkie dodawania,
+
+52
+00:06:33,000 --> 00:06:39,000
+bo to są tak naprawdę dodawania i mnożenia, czyli operacje matematyczne, w ten sposób się odbywają.
+
+53
+00:06:39,000 --> 00:06:45,000
+I dzięki temu AI rozumie, co my jako autorzy prompta mieliśmy na myśli.
+
+54
+00:06:45,000 --> 00:06:48,000
+To jest bardzo ważny mechanizm.
+
+55
+00:06:48,000 --> 00:06:54,000
+Też pamiętajcie o tym, że tych mechanizmów, czyli tak naprawdę tych głów atencji,
+
+56
+00:06:54,000 --> 00:07:01,000
+"attention heads" to się nazywa, tak to przynajmniej autorzy pracy oryginalnej z 2017 roku nazywają,
+
+57
+00:07:01,000 --> 00:07:04,000
+że tych głów jest bardzo dużo.
+
+58
+00:07:04,000 --> 00:07:17,000
+I to można sobie tak ułożyć w głowie, że wielkość korelacji między poszczególnymi tokenami zależy od kontekstu.
+
+59
+00:07:17,000 --> 00:07:25,000
+Bo w kontekście na przykład formalnym pewne tokeny mogą z sobą bardziej korelować,
+
+60
+00:07:25,000 --> 00:07:31,000
+w kontekście geografii na przykład kolory mogą ze sobą mocniej korelować,
+
+61
+00:07:31,000 --> 00:07:40,000
+w kontekście języka nieformalnego co innego, w kontekście języka dzieci co innego itd.
+
+62
+00:07:40,000 --> 00:07:43,000
+Więc tych głów atencji jest bardzo dużo.
+
+63
+00:07:43,000 --> 00:07:51,000
+Natomiast podobnie jak to było z embeddingsami, my jako użytkownicy nie wiemy tak naprawdę jakie to są konteksty,
+
+64
+00:07:51,000 --> 00:07:57,000
+bo te konteksty są tworzone na etapie uczenia LLM-a.
+
+65
+00:07:57,000 --> 00:08:02,000
+Także my tego do końca nie wiemy, natomiast wiemy jaki jest efekt.
+
+66
+00:08:02,000 --> 00:08:11,000
+I efekt jest taki, że my piszemy coś i to jest zrozumiałe dla LLM-a.
+
+67
+00:08:11,000 --> 00:08:14,000
+To jest bardzo istotne i chciałbym żebyście to zapamiętali.
+
+68
+00:08:14,000 --> 00:08:23,000
+I swoją drogą to ma dosyć ciekawe następstwa, bo na przykład używając słów "proszę" albo "dziękuję" dla LLM-a,
+
+69
+00:08:23,000 --> 00:08:30,000
+to tak naprawdę utrudniamy mu zadanie, bo on musi wymyślić, że te tokeny ze sobą nie korelują,
+
+70
+00:08:30,000 --> 00:08:34,000
+że to jest jakby dodatek i to jest coś można powiedzieć z innego kontekstu,
+
+71
+00:08:34,000 --> 00:08:39,000
+bo to jest coś z kontekstu związanego z tym, że jesteśmy mili.
+
+72
+00:08:39,000 --> 00:08:43,000
+Także nie warto tego robić, jest to pewnego rodzaju marnotrawstwo.
+
+73
+00:08:43,000 --> 00:08:49,000
+I wiem, że być może część z Was boi się co będzie, jeżeli EA panuje świat.
+
+74
+00:08:49,000 --> 00:08:51,000
+No ale ja na przykład unikam tego.
+
+75
+00:08:51,000 --> 00:08:58,000
+Ja unikam, chociaż zdradzę Wam, że mam taki nawyk, przez co się pracuję w firmie IT i staram się być miły.
+
+76
+00:08:58,000 --> 00:09:06,000
+Często też promptując jestem miły, ale jak później oglądam te swoje prompty i robię pewnego rodzaju retro,
+
+77
+00:09:06,000 --> 00:09:10,000
+co zrobiłem dobrze, co źle, no to wiem, że to nie jest dobre.
+
+78
+00:09:10,000 --> 00:09:15,000
+Także zachęcam Was, żeby tego nie robić.
+
+79
+00:09:15,000 --> 00:09:22,000
+Także tyle. Pamiętajcie, mechanizm atencji powoduje ukontekstawianie naszego prompta
+
+80
+00:09:22,000 --> 00:09:30,000
+i dzięki niemu AI wie, co my jako autorzy danego zapytania chcieliśmy uzyskać.
+
+81
+00:09:30,000 --> 00:09:34,000
+Także to tyle i zapraszam na kolejne lekcje. Dziękuję.
+
