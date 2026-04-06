@@ -9,34 +9,22 @@ export type LessonIntroSlide = {
 	presenterName?: string;
 };
 
-export type FlowDiagramSlide = {
-	type: 'flow-diagram';
-	startInSeconds: number;
-	endInSeconds: number;
-	svgPath: string;
-};
-
-export type ProbabilityChartDatum = {
-	token: string;
-	prob: number;
-	color: string;
-};
-
-export type ProbabilityChartSlide = {
-	type: 'probability-chart';
+export type MechanismComparisonSlide = {
+	type: 'mechanism-comparison';
 	startInSeconds: number;
 	endInSeconds: number;
 	kicker: string;
 	title: string;
 	subtitle: string;
-	chartTitle: string;
-	data: readonly ProbabilityChartDatum[];
+	leftTitle: string;
+	leftBody: string;
+	leftBullets: readonly string[];
+	rightTitle: string;
+	rightBody: string;
+	rightBullets: readonly string[];
 };
 
-export type LessonSlide =
-	| LessonIntroSlide
-	| FlowDiagramSlide
-	| ProbabilityChartSlide;
+export type LessonSlide = LessonIntroSlide | MechanismComparisonSlide;
 
 export type LessonDefinition = {
 	id: string;

@@ -7,12 +7,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "sync:data": "node scripts/generate-lesson-data.mjs && node scripts/generate-diagrams.mjs",
-    "sync:assets": "mkdir -p public && cp L1/L1_intro.mp4 public/L1_intro.mp4",
-    "studio": "npm run sync:assets && npm run sync:data && remotion studio src/index.ts",
-    "render:l1": "node scripts/prepare-and-render-enhanced.mjs",
-    "render:l1-enhanced": "node scripts/prepare-and-render-enhanced.mjs",
-    "analyze:video": "tsx tools/video-analyzer/src/cli.ts",
+    "sync:assets": "mkdir -p public && cp L5/attention.mp4 public/L5_attention.mp4",
+    "sync:assets:l5": "mkdir -p public && cp L5/attention.mp4 public/L5_attention.mp4",
+    "studio": "npm run sync:assets && remotion studio src/index.ts",
+    "studio:l5": "npm run sync:assets:l5 && remotion studio src/index.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },

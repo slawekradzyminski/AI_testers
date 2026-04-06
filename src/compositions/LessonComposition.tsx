@@ -2,8 +2,7 @@ import React from 'react';
 import {AbsoluteFill, Html5Video, Sequence, staticFile} from 'remotion';
 import type {LessonDefinition, LessonSlide} from '../content/types';
 import {LessonIntro} from '../components/LessonIntro';
-import {FlowDiagramSlide} from '../components/FlowDiagramSlide';
-import {ProbabilityChartSlide} from '../components/ProbabilityChartSlide';
+import {MechanismComparisonSlide} from '../components/MechanismComparisonSlide';
 import {slideFontFamily} from '../components/slideTheme';
 import {secondsToFrameIndex, secondsToFrames} from '../lib/constants';
 
@@ -37,11 +36,7 @@ export const calculateLessonMetadata = ({
 	};
 };
 
-export const renderLessonSlide = (
-	slide: LessonSlide,
-	durationInFrames: number,
-	saltPrefix = 'lesson',
-) => {
+export const renderLessonSlide = (slide: LessonSlide, durationInFrames: number) => {
 	switch (slide.type) {
 		case 'intro':
 			return (
@@ -53,22 +48,19 @@ export const renderLessonSlide = (
 					presenterName={slide.presenterName}
 				/>
 			);
-		case 'flow-diagram':
+		case 'mechanism-comparison':
 			return (
-				<FlowDiagramSlide
-					durationInFrames={durationInFrames}
-					svgPath={slide.svgPath}
-				/>
-			);
-		case 'probability-chart':
-			return (
-				<ProbabilityChartSlide
+				<MechanismComparisonSlide
 					durationInFrames={durationInFrames}
 					kicker={slide.kicker}
 					title={slide.title}
 					subtitle={slide.subtitle}
-					chartTitle={slide.chartTitle}
-					data={slide.data}
+					leftTitle={slide.leftTitle}
+					leftBody={slide.leftBody}
+					leftBullets={slide.leftBullets}
+					rightTitle={slide.rightTitle}
+					rightBody={slide.rightBody}
+					rightBullets={slide.rightBullets}
 				/>
 			);
 	}
@@ -103,7 +95,7 @@ export const LessonComposition: React.FC<LessonCompositionProps> = ({lesson}) =>
 						durationInFrames={sequence.durationInFrames}
 						name={sequence.type}
 					>
-						{renderLessonSlide(slide, sequence.durationInFrames, sequence.id)}
+						{renderLessonSlide(slide, sequence.durationInFrames)}
 					</Sequence>
 				);
 			})}

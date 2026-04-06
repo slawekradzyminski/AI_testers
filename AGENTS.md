@@ -1,2 +1,5 @@
 - make sure `npm run typecheck` and `npm run test` pass
 - aim to cover reusable components by tests
+- for Remotion slides and animations, use `L5MechanizmyTransformera` as the reference level of text density and simplicity
+- prefer one visual idea per slide, with very little text: usually one title plus 2 short labels or captions max
+- avoid explanatory paragraphs on slides; narration should carry detail, visuals should stay minimal
